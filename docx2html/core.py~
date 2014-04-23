@@ -1407,7 +1407,7 @@ def convert(file_path, image_handler=None, fall_back=None, converter=None):
     tree, meta_data = _get_document_data(zf, image_handler)
     return create_html(tree, meta_data)
 
-def regex_callback(m):
+def repl(m):
     res=''
     if(m.group(0)):
         res = '&#160;' * len(m.group(0))
@@ -1455,7 +1455,7 @@ def create_html(tree, meta_data):
                 # If there is not text do not add an empty tag.
                 if p_text == '':
                     continue
-                new_el = etree.XML('<p>%s</p>' % re.sub(' {2,}', regex_callback, p_text))
+                new_el = etree.XML('<p>%s</p>' % re.sub(' {2,}', repl, p_text))
             new_html.append(new_el)
 
         elif el.tag == '%stbl' % w_namespace:
